@@ -250,6 +250,11 @@ public:
 		}
 	}
 
+	Flock2dPtr GetFlock() const
+	{
+			return flock22d;
+	}
+
 	Point2d FindFlockCenter(Flock2dPtr bflockPtr)
 	{
 		double			totalH = 0, totalV = 0, totalD = 0;
