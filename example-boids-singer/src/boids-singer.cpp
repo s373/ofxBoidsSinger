@@ -8,7 +8,7 @@ int main(){
 
 					singerflock2d;
 
-	singerflock2d . setup(1, 0);
+	singerflock2d . setup(100, 0);
 
 	singerflock2d . update();
 
