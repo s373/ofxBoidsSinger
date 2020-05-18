@@ -1,12 +1,16 @@
+/*
+	boids2d 08/2005 a.sier / jasch 
+	adapted from boids by eric singer 
+	� 1995-2003 eric l. singer
+	free for non-commercial use
+*/
+
 #pragma once
+
 #include "ofMain.h"
 
 static char *ds373boid2denpt = new char('0');
 
-/*
-	boids2d 08/2005 a.sier / jasch adapted from boids by eric singer � 1995-2003 eric l. singer
-	free for non-commercial use
-*/
 // Max + C Header files, already included in ofMain.h
 // #include	<ext.h>
 // #include	<ext_common.h>
@@ -79,12 +83,12 @@ typedef struct Boid2d {
 
 typedef struct FlockObject2d {
 	// Object		theObject;
-	void		*out1 = nullptr, *out2 = new char; // 2 outlets
+	void		*out1 = nullptr, *out2 = new char[0]; // 2 outlets
 	short		mode;
-	// long		numBoids;
-	short		numBoids;
-	// long		numNeighbors;
-	short		numNeighbors;
+	long		numBoids;
+	// short		numBoids;
+	long		numNeighbors;
+	// short		numNeighbors;
 	Box2d		flyRect;
 	double 		minSpeed;
 	double		maxSpeed;
@@ -101,7 +105,6 @@ typedef struct FlockObject2d {
 	double		prefDistSqr;
 	Point2d		centerPt;
 	Point2d		attractPt;
-	// Boid2dPtr	boid;
 	Boid2dPtr	boid;
 	double 		d2r, r2d;
 } FlockObject2d, *Flock2dPtr;
@@ -109,8 +112,6 @@ typedef struct FlockObject2d {
 // // variables
 // void*	bflock;
 // t_symbol *ps_nothing;
-
-
 
 // prototypes
 // void main();
@@ -160,7 +161,7 @@ typedef struct FlockObject2d {
 
 class ofxBoidsSinger2D {
 protected:
-// variables
+	// variables
 	void*	bflock;
 	// t_symbol *ps_nothing;
 	char *ps_nothing = nullptr;
@@ -168,10 +169,12 @@ protected:
 	Flock2dPtr flock2d;
 
 public:
-	void setup(int nboids, int mode){
-		flock2d = new FlockObject2d ();
+
+	void setup(int nboids)
+	{ 
+		flock2d = new FlockObject2d();
 		setNumBoids(nboids);
-		flock2d->mode = mode; // CLAMP(mode,0,2);
+		flock2d->mode = 0;
 		flock2d->d2r = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117068/180.0;
 		flock2d->r2d = 180.0/3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117068;
 		InitFlock(flock2d);
@@ -188,10 +191,12 @@ public:
 		Velocity		avoidNeighborVel;
 		float			avoidNeighborSpeed;
 		const Velocity	zeroVel	= {0.0, 0.0};//, 0.0};
-		short			i;
+		// short i;
+		long i;
 
 		bflockPtr->centerPt = FindFlockCenter(bflockPtr);
-		for (i = 0; i <  bflockPtr->numBoids; i++) {						// save position and velocity
+		for (i = 0; i <  bflockPtr->numBoids; i++) 
+		{	// save position and velocity
 			bflockPtr->boid[i].oldPos.x = bflockPtr->boid[i].newPos.x;
 			bflockPtr->boid[i].oldPos.y = bflockPtr->boid[i].newPos.y;
 			// bflockPtr->boid[i].oldPos.z = bflockPtr->boid[i].newPos.z;
@@ -200,8 +205,10 @@ public:
 			bflockPtr->boid[i].oldDir.y = bflockPtr->boid[i].newDir.y;
 			// bflockPtr->boid[i].oldDir.z = bflockPtr->boid[i].newDir.z;
 		}
+		
 		for (i = 0; i < bflockPtr->numBoids; i++) {
-			if (bflockPtr->numNeighbors > 0) {							// get all velocity components
+			if (bflockPtr->numNeighbors > 0) 
+			{	// get all velocity components
 				avoidNeighborSpeed = MatchAndAvoidNeighbors(bflockPtr, i,&matchNeighborVel, &avoidNeighborVel);
 			} else {
 				matchNeighborVel = zeroVel;
@@ -252,14 +259,15 @@ public:
 
 	Flock2dPtr GetFlock() const
 	{
-			return flock22d;
+			return flock2d;
 	}
 
 	Point2d FindFlockCenter(Flock2dPtr bflockPtr)
 	{
 		double			totalH = 0, totalV = 0, totalD = 0;
 		Point2d			centerPoint;
-		register short	i;
+		// register short i;
+		long i;
 
 		for (i = 0 ; i <  bflockPtr->numBoids; i++)
 		{
@@ -276,7 +284,8 @@ public:
 
 	float MatchAndAvoidNeighbors(Flock2dPtr bflockPtr, short theBoid, Velocity *matchNeighborVel, Velocity *avoidNeighborVel)
 	{
-		short			i, j, neighbor;
+		// short i, j, neighbor;
+		long i, j, neighbor;
 		double			distSqr;
 		double			dist, distH, distV,distD;
 		double			tempSpeed;
@@ -288,7 +297,8 @@ public:
 		/**********************/
 
 		/* special case of one neighbor */
-		if (bflockPtr->numNeighbors == 1) {
+		if (bflockPtr->numNeighbors == 1) 
+		{
 			bflockPtr->boid[theBoid].neighborDistSqr[0] = kMaxLong;
 
 			for (i = 0; i < bflockPtr->numBoids; i++) {
@@ -304,7 +314,8 @@ public:
 			}
 		}
 		/* more than one neighbor */
-		else {
+		else 
+		{
 			for (j = 0; j < bflockPtr->numNeighbors; j++)
 				bflockPtr->boid[theBoid].neighborDistSqr[j] = kMaxLong;
 
@@ -341,7 +352,8 @@ public:
 		// set tempSpeed to old speed
 		tempSpeed = bflockPtr->boid[theBoid].speed;
 
-		for (i = 0; i < bflockPtr->numNeighbors; i++) {
+		for (i = 0; i < bflockPtr->numNeighbors; i++) 
+		{
 			neighbor = bflockPtr->boid[theBoid].neighbor[i];
 
 			// calculate matchNeighborVel by averaging the neighbor velocities
@@ -351,7 +363,8 @@ public:
 
 			// if distance is less than preferred distance, then neighbor influences boid
 			distSqr = bflockPtr->boid[theBoid].neighborDistSqr[i];
-			if (distSqr < bflockPtr->prefDistSqr) {
+			if (distSqr < bflockPtr->prefDistSqr) 
+			{
 				dist = sqrt(distSqr);
 
 				distH = bflockPtr->boid[neighbor].oldPos.x - bflockPtr->boid[theBoid].oldPos.x;
@@ -365,26 +378,30 @@ public:
 
 				numClose++;
 			}
-			if (InFront(&(bflockPtr->boid[theBoid]), &(bflockPtr->boid[neighbor]))) {	// adjust speed
+			if (InFront(&(bflockPtr->boid[theBoid]), &(bflockPtr->boid[neighbor]))) 
+			{	// adjust speed
 				if (distSqr < bflockPtr->prefDistSqr)
 					tempSpeed /= (bflockPtr->accelFactor / 100.0);
 				else
 					tempSpeed *= (bflockPtr->accelFactor / 100.0);
 			}
-			else {
+			else 
+			{
 				if (distSqr < bflockPtr->prefDistSqr)
 					tempSpeed *= (bflockPtr->accelFactor / 100.0);
 				else
 					tempSpeed /= (bflockPtr->accelFactor / 100.0);
 			}
 		}
+
 		if (numClose) {
 			avoidNeighborVel->x = totalVel.x / numClose;
 			avoidNeighborVel->y = totalVel.y / numClose;
 			// avoidNeighborVel->z = totalVel.z / numClose;
 			NormalizeVelocity(matchNeighborVel);
 		}
-		else {
+		else 
+		{
 			avoidNeighborVel->x = 0;
 			avoidNeighborVel->y = 0;
 			// avoidNeighborVel->z = 0;
@@ -442,22 +459,24 @@ public:
 	bool InFront(Boid2dPtr theBoid, Boid2dPtr neighbor)
 	{
 		float	grad, intercept;
-		bool result;
+		bool	result;
 
-	/*
+/*
 
-	Find the gradient and y-intercept of a line passing through theBoid's oldPos
-	perpendicular to its direction of motion.  Another boid is in front of theBoid
-	if it is to the right or left of this linedepending on whether theBoid is moving
-	right or left.  However, if theBoid is travelling vertically then just compare
-	their vertical coordinates.
+Find the gradient and y-intercept of a line passing through theBoid's oldPos
+perpendicular to its direction of motion.  Another boid is in front of theBoid
+if it is to the right or left of this linedepending on whether theBoid is moving
+right or left.  However, if theBoid is travelling vertically then just compare
+their vertical coordinates.
 
-	*/
+*/
 		// xy plane
 
 		// if theBoid is not travelling vertically...
-		if (theBoid->oldDir.x != 0) {
-			// calculate gradient of a line _perpendicular_ to its direction (hence the minus)
+		if (theBoid->oldDir.x != 0) 
+		{ // calculate gradient of a line _perpendicular_ 
+		  // to its direction (hence the minus)
+			
 			grad = -theBoid->oldDir.y / theBoid->oldDir.x;
 
 			// calculate where this line hits the y axis (from y = mx + c)
@@ -472,7 +491,9 @@ public:
 				if (result==0) return 0;
 				else goto next;
 
-			} else {
+			} 
+			else 
+			{
 				/* return true if the first boid's horizontal movement is +ve */
 				result = (theBoid->oldDir.x < 0);
 				if (result==0) return 0;
@@ -480,14 +501,17 @@ public:
 			}
 		}
 		/* else theBoid is travelling vertically, so just compare vertical coordinates */
-		else if (theBoid->oldDir.y > 0) {
+		else if (theBoid->oldDir.y > 0) 
+		{
 			result = (neighbor->oldPos.y > theBoid->oldPos.y);
 			if (result==0){
 				return 0;
 			}else{
 				goto next;
 			}
-		}else{
+		}
+		else
+		{
 			result = (neighbor->oldPos.y < theBoid->oldPos.y);
 			if (result==0){
 				return 0;
@@ -553,14 +577,15 @@ public:
 
 		hypot = sqrt(direction->x * direction->x + direction->y * direction->y);// + direction->z * direction->z );
 
-		if (hypot != 0.0) {
+		if (hypot != 0.0) 
+		{
 			direction->x = direction->x / hypot;
 			direction->y = direction->y / hypot;
 			// direction->z = direction->z / hypot;
 		}
 	}
 
-	double DistSqrToPt(Point2d firstPoint, Point2d secondPoint)
+	double DistSqrToPt(Point2d & firstPoint, Point2d & secondPoint)
 	{
 		double	a, b,c;
 		a = firstPoint.x - secondPoint.x;
@@ -577,7 +602,7 @@ public:
 			delete [] flock2d->boid;
 		flock2d->boid = new Boid2d[nboids];
 		flock2d->numBoids = nboids;
-		// Flock_resetBoids()
+		Flock_resetBoids(flock2d);
 	}
 
 	void Flock_resetBoids(Flock2dPtr bflockPtr)
@@ -585,7 +610,8 @@ public:
 		long i, j;
 		double rndAngle;
 
-		for (i = 0; i <  bflockPtr->numBoids; i++) { // init everything to 0.0
+		for (i = 0; i <  bflockPtr->numBoids; i++) 
+		{ // init everything to 0.0
 			bflockPtr->boid[i].oldPos.x = 0.0;
 			bflockPtr->boid[i].oldPos.y = 0.0;
 			// bflockPtr->boid[i].oldPos.z = 0.0;
@@ -609,7 +635,8 @@ public:
 				bflockPtr->boid[i].neighborDistSqr[j] = 0.0;
 			}
 		}
-		for (i = 0; i <  bflockPtr->numBoids; i++) {				// set the initial locations and velocities of the boids
+		for (i = 0; i <  bflockPtr->numBoids; i++) 
+		{	// set the initial locations and velocities of the boids
 			bflockPtr->boid[i].newPos.x = bflockPtr->boid[i].oldPos.x = RandomInt(bflockPtr->flyRect.right,bflockPtr->flyRect.left);		// set random location within flyRect
 			bflockPtr->boid[i].newPos.y = bflockPtr->boid[i].oldPos.y = RandomInt(bflockPtr->flyRect.bottom, bflockPtr->flyRect.top);
 			// bflockPtr->boid[i].newPos.z = bflockPtr->boid[i].oldPos.z = RandomInt(bflockPtr->flyRect.back, bflockPtr->flyRect.front);
@@ -686,11 +713,11 @@ public:
 		flock2d->speedupFactor = d;
 	}
 	void set_inertiaFactor(float d){
-		flock2d->inertiaFactor = MA.X(0.000001,d);
+		flock2d->inertiaFactor = MA.X((double)(9.999999999999999547e-07), d);
 	}
-	void set_prefDist(float d){
-		flock2d->prefDist = d;
-	}
+	// void set_prefDist(float d){
+	// 	flock2d->prefDist = d;
+	// }
 	void set_accelFactor(float d){
 		flock2d->accelFactor = d;
 	}
@@ -736,56 +763,56 @@ public:
 		float 	azi, speed;
 		FlightStep( flock2d );
 		long long i;
-		switch(flock2d->mode) { // newpos
-			case 0:
-			for (i = 0; i < flock2d->numBoids; i++){
-			// 	SETLONG(out+0, i);
-			// 	SETFLOAT(out+1, bflockPtr->boid[i].newPos.x);
-			// 	SETFLOAT(out+2, bflockPtr->boid[i].newPos.y);
-			// //	SETFLOAT(out+3, bflockPtr->boid[i].newPos.z);
-			// 	outlet_list(bflockPtr->out1, 0L, 3, out);
-			}
-			break;
-			case 1: //newpos + oldpos
-			for (i = 0; i < flock2d->numBoids; i++){
-				// SETLONG(out+0, i);
-				// SETFLOAT(out+1, bflockPtr->boid[i].newPos.x);
-				// SETFLOAT(out+2, bflockPtr->boid[i].newPos.y);
-				// // SETFLOAT(out+3, bflockPtr->boid[i].newPos.z);
-				// SETFLOAT(out+4, bflockPtr->boid[i].oldPos.x);
-				// SETFLOAT(out+5, bflockPtr->boid[i].oldPos.y);
-				// // SETFLOAT(out+6, bflockPtr->boid[i].oldPos.z);
-				// outlet_list(bflockPtr->out1, 0L, 7, out);
-			}
-			break;
-			case 2:
-			for (i = 0; i < flock2d->numBoids; i++){
-				// tempNew_x = bflockPtr->boid[i].newPos.x;
-				// tempNew_y = bflockPtr->boid[i].newPos.y;
-				// // tempNew_z = bflockPtr->boid[i].newPos.z;
-				// tempOld_x = bflockPtr->boid[i].oldPos.x;
-				// tempOld_y = bflockPtr->boid[i].oldPos.y;
-				// // tempOld_z = bflockPtr->boid[i].oldPos.z;
-				// delta_x = tempNew_x - tempOld_x;
-				// delta_y = tempNew_y - tempOld_y;
-				// // delta_z = tempNew_z - tempOld_z;
-				// azi = atan2(delta_y, delta_x) * bflockPtr->r2d;
-				// // ele = atan2(delta_y, delta_x) * bflockPtr->r2d;
-				// speed = sqrt(delta_x * delta_x + delta_y * delta_y);//  + delta_z * delta_z);
-				// SETLONG(out+0, i);
-				// SETFLOAT(out+1, tempNew_x);
-				// SETFLOAT(out+2, tempNew_y);
-				// // SETFLOAT(out+3, tempNew_z);
-				// SETFLOAT(out+4, tempOld_x);
-				// SETFLOAT(out+5, tempOld_y);
-				// // SETFLOAT(out+6, tempOld_z);
-				// SETFLOAT(out+7, speed);
-				// SETFLOAT(out+8, azi);
-				// // SETFLOAT(out+9, ele);
-				// outlet_list(bflockPtr->out1, 0L, 9, out); //was 7. mathieu found this bug
-			}
-			break;
-		}
+		// switch(flock2d->mode) { // newpos
+		// 	case 0:
+		// 	for (i = 0; i < flock2d->numBoids; i++){
+		// 	// 	SETLONG(out+0, i);
+		// 	// 	SETFLOAT(out+1, bflockPtr->boid[i].newPos.x);
+		// 	// 	SETFLOAT(out+2, bflockPtr->boid[i].newPos.y);
+		// 	// //	SETFLOAT(out+3, bflockPtr->boid[i].newPos.z);
+		// 	// 	outlet_list(bflockPtr->out1, 0L, 3, out);
+		// 	}
+		// 	break;
+		// 	case 1: //newpos + oldpos
+		// 	for (i = 0; i < flock2d->numBoids; i++){
+		// 		// SETLONG(out+0, i);
+		// 		// SETFLOAT(out+1, bflockPtr->boid[i].newPos.x);
+		// 		// SETFLOAT(out+2, bflockPtr->boid[i].newPos.y);
+		// 		// // SETFLOAT(out+3, bflockPtr->boid[i].newPos.z);
+		// 		// SETFLOAT(out+4, bflockPtr->boid[i].oldPos.x);
+		// 		// SETFLOAT(out+5, bflockPtr->boid[i].oldPos.y);
+		// 		// // SETFLOAT(out+6, bflockPtr->boid[i].oldPos.z);
+		// 		// outlet_list(bflockPtr->out1, 0L, 7, out);
+		// 	}
+		// 	break;
+		// 	case 2:
+		// 	for (i = 0; i < flock2d->numBoids; i++){
+		// 		// tempNew_x = bflockPtr->boid[i].newPos.x;
+		// 		// tempNew_y = bflockPtr->boid[i].newPos.y;
+		// 		// // tempNew_z = bflockPtr->boid[i].newPos.z;
+		// 		// tempOld_x = bflockPtr->boid[i].oldPos.x;
+		// 		// tempOld_y = bflockPtr->boid[i].oldPos.y;
+		// 		// // tempOld_z = bflockPtr->boid[i].oldPos.z;
+		// 		// delta_x = tempNew_x - tempOld_x;
+		// 		// delta_y = tempNew_y - tempOld_y;
+		// 		// // delta_z = tempNew_z - tempOld_z;
+		// 		// azi = atan2(delta_y, delta_x) * bflockPtr->r2d;
+		// 		// // ele = atan2(delta_y, delta_x) * bflockPtr->r2d;
+		// 		// speed = sqrt(delta_x * delta_x + delta_y * delta_y);//  + delta_z * delta_z);
+		// 		// SETLONG(out+0, i);
+		// 		// SETFLOAT(out+1, tempNew_x);
+		// 		// SETFLOAT(out+2, tempNew_y);
+		// 		// // SETFLOAT(out+3, tempNew_z);
+		// 		// SETFLOAT(out+4, tempOld_x);
+		// 		// SETFLOAT(out+5, tempOld_y);
+		// 		// // SETFLOAT(out+6, tempOld_z);
+		// 		// SETFLOAT(out+7, speed);
+		// 		// SETFLOAT(out+8, azi);
+		// 		// // SETFLOAT(out+9, ele);
+		// 		// outlet_list(bflockPtr->out1, 0L, 9, out); //was 7. mathieu found this bug
+		// 	}
+		// 	break;
+		// }
 
 	}
 
@@ -794,7 +821,8 @@ public:
 		unsigned short	qdRdm;
 		double			t, result;
 
-		qdRdm = Random();
+		// qdRdm = Random();
+		qdRdm = rand() % 65536;
 		t = (double)qdRdm / 65536.0; 	// now 0 <= t <= 1
 		result = (t * (maxRange - minRange)) + minRange;
 		return(result);
