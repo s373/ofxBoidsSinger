@@ -29,7 +29,7 @@ const short			kNumNeighbors	= 2;	// must be <= kMaxNeighbors
 const double 		kMinSpeed		= 0.15;	// boids' minimum speed
 const double		kMaxSpeed		= 0.25;	// boids' maximum speed
 const double		kCenterWeight	= 0.25;	// bflock centering
-const double		kAttractWeight	= 0.300;// attraction point seeking
+const double		kAttractWeight	= 0.000;// attraction point seeking
 const double		kMatchWeight	= 0.100;// neighbors velocity matching
 const double		kAvoidWeight	= 0.10;	// neighbors avoidance
 const double		kWallsWeight	= 0.500;// wall avoidance [210]
@@ -178,7 +178,6 @@ public:
 		flock2d->d2r = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117068/180.0;
 		flock2d->r2d = 180.0/3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117068;
 		InitFlock(flock2d);
-		cout << setprecision(256) << ds373boid2denpt << " "<< this << " " << flock2d->out1 <<" "<< flock2d->out2 << " ofxBoidsSinger2D "<< __DATE__<< " "<< __TIME__ << " " << flock2d->d2r << " " << flock2d->r2d << endl;
 		// 0 0x7fffee410880 0 0x5645dbf8ef70 ofxBoidsSinger2D May 16 2020 07:37:43
 	}
 
@@ -713,11 +712,8 @@ their vertical coordinates.
 		flock2d->speedupFactor = d;
 	}
 	void set_inertiaFactor(float d){
-		flock2d->inertiaFactor = MA.X((double)(9.999999999999999547e-07), d);
+		flock2d->inertiaFactor = MAX((double)(9.999999999999999547e-07), d);
 	}
-	// void set_prefDist(float d){
-	// 	flock2d->prefDist = d;
-	// }
 	void set_accelFactor(float d){
 		flock2d->accelFactor = d;
 	}
