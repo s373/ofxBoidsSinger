@@ -1,7 +1,7 @@
 # ofxBoidsSinger
----
+
 by s373.net/x art codex studios
-***
+
 
 
 Ported from boids package for max/msp/jitter 051219
