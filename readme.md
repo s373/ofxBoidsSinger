@@ -142,6 +142,123 @@ UB notes (version 1.1 / 20070125):
 ``` 
 
 
+
+## tree
+```
+.
+├── COPYING
+├── documentation
+│   └── boids_max_jitter_UB_1.1
+│       ├── boids_objects
+│       │   ├── Boids
+│       │   │   ├── BoidDot
+│       │   │   ├── Boids.1.7.c
+│       │   │   ├── Boids.help
+│       │   │   └── Boids.mxo
+│       │   │       └── Contents
+│       │   │           ├── Info.plist
+│       │   │           ├── MacOS
+│       │   │           │   └── Boids
+│       │   │           └── PkgInfo
+│       │   ├── boids2d
+│       │   │   ├── Boids2d.2.0a.c
+│       │   │   ├── boids2d.help
+│       │   │   ├── boids2d_jitter.help
+│       │   │   ├── boids2d.mxo
+│       │   │   │   └── Contents
+│       │   │   │       ├── Info.plist
+│       │   │   │       ├── MacOS
+│       │   │   │       │   └── boids2d
+│       │   │   │       └── PkgInfo
+│       │   │   ├── boids2d.xcodeproj
+│       │   │   │   ├── project.pbxproj
+│       │   │   │   ├── sier.mode1
+│       │   │   │   ├── sier.pbxuser
+│       │   │   │   └── sier.perspective
+│       │   │   └── Info.plist
+│       │   ├── boids3d
+│       │   │   ├── boids3d.2.0.c
+│       │   │   ├── boids3d.help
+│       │   │   ├── boids3d_jitter.help
+│       │   │   ├── boids3d.mxo
+│       │   │   │   └── Contents
+│       │   │   │       ├── Info.plist
+│       │   │   │       ├── MacOS
+│       │   │   │       │   └── boids3d
+│       │   │   │       └── PkgInfo
+│       │   │   ├── boids3d.xcodeproj
+│       │   │   │   ├── project.pbxproj
+│       │   │   │   ├── sier.mode1
+│       │   │   │   ├── sier.pbxuser
+│       │   │   │   └── sier.perspective
+│       │   │   └── Info.plist
+│       │   ├── jit.boids2d
+│       │   │   ├── Info.plist
+│       │   │   ├── jit.boids2d_a1.c
+│       │   │   ├── jit.boids2d.help
+│       │   │   ├── jit.boids2d.mxo
+│       │   │   │   └── Contents
+│       │   │   │       ├── Info.plist
+│       │   │   │       └── MacOS
+│       │   │   │           └── jit.boids2d
+│       │   │   ├── max.jit.boids2d.c
+│       │   │   └── max.jit.boids.xcodeproj
+│       │   │       ├── project.pbxproj
+│       │   │       ├── sier.pbxuser
+│       │   │       └── sier.perspective
+│       │   ├── jit.boids3d
+│       │   │   ├── Info.plist
+│       │   │   ├── jit.boids3d_a.c
+│       │   │   ├── jit.boids3d.help
+│       │   │   ├── jit.boids3d.mxo
+│       │   │   │   └── Contents
+│       │   │   │       ├── Info.plist
+│       │   │   │       ├── MacOS
+│       │   │   │       │   └── jit.boids3d
+│       │   │   │       └── PkgInfo
+│       │   │   ├── max.jit.boids3d.c
+│       │   │   └── max.jit.boids3d.xcodeproj
+│       │   │       ├── project.pbxproj
+│       │   │       ├── sier.pbxuser
+│       │   │       └── sier.perspective
+│       │   └── xray.jit.boidsrender
+│       │       ├── Info.plist
+│       │       ├── max.jit.boidsrender.xcodeproj
+│       │       │   ├── project.pbxproj
+│       │       │   ├── sier.pbxuser
+│       │       │   └── sier.perspective
+│       │       ├── max.xray.jit.boidsrender.c
+│       │       ├── xray.jit.boidsrender.c
+│       │       ├── xray.jit.boidsrender.help
+│       │       └── xray.jit.boidsrender.mxo
+│       │           └── Contents
+│       │               ├── Info.plist
+│       │               ├── MacOS
+│       │               │   └── xray.jit.boidsrender
+│       │               └── PkgInfo
+│       ├── boids overview.pat
+│       ├── boids.readme-ub.txt
+│       └── COPYING
+├── example2d
+│   ├── addons.make
+│   ├── Makefile
+│   └── src
+│       └── example2d.cpp
+├── example3d
+│   ├── addons.make
+│   ├── Makefile
+│   └── src
+│       └── example3d.cpp
+├── readme.md
+└── src
+    ├── ofxBoidsSinger2d.h
+    ├── ofxBoidsSinger3d.h
+    ├── ofxBoidsSinger.h
+    └── ofxBoidsSingerTypes.h
+
+37 directories, 72 files
+```
+
 ---
 
 2020.3107671

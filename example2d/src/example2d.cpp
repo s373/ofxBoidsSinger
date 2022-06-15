@@ -8,7 +8,6 @@ class ofApp : public ofBaseApp{
 		flock2d.setup(100);
 		flock2d.set_minSpeed(0.100);	
 		flock2d.set_maxSpeed(0.720);
-        cout << "short limits " + ofToString(std::numeric_limits<short>::max())<<endl;
 	}
 	void update(){
 		flock2d.update();
@@ -22,8 +21,7 @@ class ofApp : public ofBaseApp{
 			ofRect( flock->boid[i].oldPos.x * ofGetWidth()/2 + ofGetWidth()/2,
 					flock->boid[i].oldPos.y * ofGetHeight()/2 + ofGetHeight()/2 , 
 					5, 5);
-			ofLine (
-				flock->boid[i].oldPos.x * ofGetWidth()/2 + ofGetWidth()/2,
+			ofLine ( flock->boid[i].oldPos.x * ofGetWidth()/2 + ofGetWidth()/2,
 				flock->boid[i].oldPos.y * ofGetHeight()/2 + ofGetHeight()/2,
 				flock->boid[i].newPos.x * ofGetWidth()/2 + ofGetWidth()/2,
 				flock->boid[i].newPos.y * ofGetHeight()/2 + ofGetHeight()/2
