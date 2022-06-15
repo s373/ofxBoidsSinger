@@ -2,21 +2,22 @@
 
 class ofApp : public ofBaseApp{
 
-	ofxBoidsSinger2D singerflock2d;
+	ofxBoidsSinger2D flock2d;
 
 	void setup(){ 
-		singerflock2d.setup(15000);
-		singerflock2d.set_minSpeed(0.100);	
-		singerflock2d.set_maxSpeed(0.720);
+		flock2d.setup(100);
+		flock2d.set_minSpeed(0.100);	
+		flock2d.set_maxSpeed(0.720);
+        cout << "short limits " + ofToString(std::numeric_limits<short>::max())<<endl;
 	}
 	void update(){
-		singerflock2d.update();
+		flock2d.update();
 	}
 	void draw(){
 		ofBackgroundGradient(240,180); 
 		ofSetColor(255,128,0);
-		Flock2dPtr flock  = singerflock2d.GetFlock();
-		for(long long i = 0; i < flock->numBoids; ++i)
+		Flock2dPtr flock  = flock2d.GetFlock();
+		for(int i = 0; i < flock->numBoids; ++i)
 		{
 			ofRect( flock->boid[i].oldPos.x * ofGetWidth()/2 + ofGetWidth()/2,
 					flock->boid[i].oldPos.y * ofGetHeight()/2 + ofGetHeight()/2 , 

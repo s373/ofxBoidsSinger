@@ -9,8 +9,6 @@
 
 #include "ofMain.h"
 
-static char *ds373boid2denpt = new char('0');
-
 // Max + C Header files, already included in ofMain.h
 // #include	<ext.h>
 // #include	<ext_common.h>
@@ -58,7 +56,6 @@ typedef struct Point2d {
 	double		y;
 //	double		z;
 } Point2d;
-// Point3d; // ok, you can play with both dimensions
 
 // typedef struct Box3D {
 typedef struct Box2d {
@@ -190,8 +187,8 @@ public:
 		Velocity		avoidNeighborVel;
 		float			avoidNeighborSpeed;
 		const Velocity	zeroVel	= {0.0, 0.0};//, 0.0};
-		// short i;
-		long i;
+		short i;
+		// long i;
 
 		bflockPtr->centerPt = FindFlockCenter(bflockPtr);
 		for (i = 0; i <  bflockPtr->numBoids; i++) 
@@ -265,8 +262,8 @@ public:
 	{
 		double			totalH = 0, totalV = 0, totalD = 0;
 		Point2d			centerPoint;
-		// register short i;
-		long i;
+		short i;
+		// long i;
 
 		for (i = 0 ; i <  bflockPtr->numBoids; i++)
 		{
@@ -283,8 +280,8 @@ public:
 
 	float MatchAndAvoidNeighbors(Flock2dPtr bflockPtr, short theBoid, Velocity *matchNeighborVel, Velocity *avoidNeighborVel)
 	{
-		// short i, j, neighbor;
-		long i, j, neighbor;
+		short i, j, neighbor;
+		// long i, j, neighbor;
 		double			distSqr;
 		double			dist, distH, distV,distD;
 		double			tempSpeed;
@@ -606,7 +603,8 @@ their vertical coordinates.
 
 	void Flock_resetBoids(Flock2dPtr bflockPtr)
 	{
-		long i, j;
+		// long i, j;
+		short i, j;
 		double rndAngle;
 
 		for (i = 0; i <  bflockPtr->numBoids; i++) 
@@ -748,17 +746,16 @@ their vertical coordinates.
 		flock2d->attractPt.y = y;
 	}
 
-	void update( ) {
-		 bang( );
-	}
-
-	void bang( void ) {
-		float 	tempNew_x, tempNew_y;
-		float 	tempOld_x, tempOld_y;
-		float	delta_x, delta_y;
-		float 	azi, speed;
+	void update() {
+		// float 	tempNew_x, tempNew_y;
+		// float 	tempOld_x, tempOld_y;
+		// float	delta_x, delta_y;
+		// float 	azi, speed;
 		FlightStep( flock2d );
-		long long i;
+		// long i;
+		// short i;
+
+        // Max outlets output modes
 		// switch(flock2d->mode) { // newpos
 		// 	case 0:
 		// 	for (i = 0; i < flock2d->numBoids; i++){
